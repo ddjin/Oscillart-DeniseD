@@ -1,3 +1,9 @@
+// connect css to js
+const color_picker = document.getElementById('color');
+const vol_slider = document.getElementById('vol-slider');
+
+
+
 // connect the js elements to the html elements
 const input = document.getElementById('input');
 
@@ -41,20 +47,27 @@ notenames.set("B", 493.9);
 // function to set frequency and channel sound
 function frequency(pitch){
  freq = pitch / 10000;
-gainNode.gain.setValueAtTime(100, audioCtx.currentTime);
+gainNode.gain.setValueAtTime(vol_slider.value, audioCtx.currentTime);
+setting = setInterval(() => {gainNode.gain.value = vol_slider.value}, 1);
+oscillator.type = waveTypeSelect.value;
 oscillator.frequency.setValueAtTime(pitch, audioCtx.currentTime);
-gainNode.gain.setValueAtTime(0, audioCtx.currentTime + (timepernote / 1000) - 0.1);
+setTimeout(()=>{
+     clearInterval(setting);
+      gain.Node.gain.value = 0;
+     },((timepernote)-10));
 }
 
 // function to handle button click and stop and resume
 function handle() { 
  reset = true;
- length = usernotes.length; 
- timepernote = (6000 / length);
+
 var usernotes = String(input.value);
 var noteslist = [];
  audioCtx.resume();
  gainNode.gain.value = 0;
+ length = usernotes.length; 
+ timepernote = (6000 / length);
+
  for ( i = 0; i < usernotes.length;i++) {
     noteslist.push(notenames.get(usernotes.charAt(i)));
  }
@@ -76,12 +89,13 @@ var noteslist = [];
 var counter = 0;
 
 function line() {
-    y = height/2 +amplitude * Math.sin(x * 2 * Math.PI * freq * (0.5 * length));
+     y = height/2 + ((vol_slider.value/100)*40) * Math.sin(x * 2  * Math.PI * freq * (0.5 * length));
     ctx.lineTo(x, y);
+     ctx.strokeStyle = color_picker.value;
     ctx.stroke();
     x = x + 1;
     counter++;
-    if ( counter > (timepernote/20)) {
+    if ( counter > (timepernote / 20)) {
         clearInterval(interval);
     }
 }

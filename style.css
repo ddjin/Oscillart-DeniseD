@@ -1,6 +1,18 @@
 #canvas {
-    border: 5px solid black;
+    border: 67px solid rgb(244, 90, 180);
     height: 500px;
     width: 900px;
     margin-bottom: 2em;
+ background-color: rgb(255, 255, 255);
+ margin: auto;
+ padding: 10px;
+}
+
+body {
+    background-color: rgb(241, 124, 182)
+}
+
+#container {
+    text-align: center;
+    margin-top: 2em;
 }
