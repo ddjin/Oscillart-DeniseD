@@ -8,8 +8,9 @@ var width = ctx.canvas.width;
 var height = ctx.canvas.height;
 var amplitude = 40;
 var interval = null;
-var counter = 0;
-
+var reset = false;
+var timepernote = 0;
+var length = 0;
 
 // create web audio api elements
 const audioCtx = new AudioContext();
@@ -39,42 +40,64 @@ notenames.set("B", 493.9);
 
 // function to set frequency and channel sound
 function frequency(pitch){
-
+ freq = pitch / 10000;
 gainNode.gain.setValueAtTime(100, audioCtx.currentTime);
 oscillator.frequency.setValueAtTime(pitch, audioCtx.currentTime);
-gainNode.gain.setValueAtTime(0, audioCtx.currentTime + 1);
+gainNode.gain.setValueAtTime(0, audioCtx.currentTime + (timepernote / 1000) - 0.1);
 }
 
 // function to handle button click and stop and resume
 function handle() { 
+ reset = true;
+ length = usernotes.length; 
+ timepernote = (6000 / length);
 var usernotes = String(input.value);
+var noteslist = [];
  audioCtx.resume();
  gainNode.gain.value = 0;
- frequency(notenames.get(usernotes));
-}
+ for ( i = 0; i < usernotes.length;i++) {
+    noteslist.push(notenames.get(usernotes.charAt(i)));
+ }
+  let j = 0;
+  
+  repeat = setInterval(() =>{
+        if (j <noteslist.length) {
+            frequency(parseInt(noteslist[j]));
+            drawWave();
+            j++;
+        } else {
+            clearInterval(repeat)
+        }
+    }, timepernote)
+
+ }
 
 // canvas methods 
+var counter = 0;
 
 function line() {
-   var freq = pitch / 10000;
-    y = height/2 + (amplitude * Math.sin(x * 2 * Math.PI * freq));
+    y = height/2 +amplitude * Math.sin(x * 2 * Math.PI * freq * (0.5 * length));
     ctx.lineTo(x, y);
     ctx.stroke();
     x = x + 1;
     counter++;
-    if (counter > 50) {
+    if ( counter > (timepernote/20)) {
         clearInterval(interval);
     }
 }
 
 function drawWave() {
-    ctx.clearRect(0, 0, width, height);
-   x = 0;
-   y = height/2;
+    clearInterval(interval);
+if (reset) {
+    ctx.clearRect(0,0,width, height);
+    x = 0;
+    y= height/2;
     ctx.moveTo(x, y);
     ctx.beginPath();
-    counter = 0;
-    interval = setInterval(line, 20);
+}
+counter = 0;
+interval = setInterval(line, 20);
+reset = false;
 }
 
 
