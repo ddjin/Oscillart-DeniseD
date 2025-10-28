@@ -46,16 +46,12 @@ notenames.set("B", 493.9);
 
 // function to set frequency and channel sound
 function frequency(pitch){
- freq = pitch / 10000;
-gainNode.gain.setValueAtTime(vol_slider.value, audioCtx.currentTime);
-setting = setInterval(() => {gainNode.gain.value = vol_slider.value}, 1);
-oscillator.type = waveTypeSelect.value;
+freq = pitch / 10000;
+gainNode.gain.setValueAtTime(100, audioCtx.currentTime);
 oscillator.frequency.setValueAtTime(pitch, audioCtx.currentTime);
-setTimeout(()=>{
-     clearInterval(setting);
-      gain.Node.gain.value = 0;
-     },((timepernote)-10));
+gainNode.gain.setValueAtTime(0, audioCtx.currentTime + (timepernote / 1000) - 0.1);
 }
+
 
 // function to handle button click and stop and resume
 function handle() { 
@@ -89,7 +85,7 @@ var noteslist = [];
 var counter = 0;
 
 function line() {
-     y = height/2 + ((vol_slider.value/100)*40) * Math.sin(x * 2  * Math.PI * freq * (0.5 * length));
+     y = height/2 +  ((vol_slider.value/100)*40)  * Math.sin(x * 2  * Math.PI * freq * (0.5 * length));
     ctx.lineTo(x, y);
      ctx.strokeStyle = color_picker.value;
     ctx.stroke();
