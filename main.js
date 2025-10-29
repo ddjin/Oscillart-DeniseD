@@ -16,8 +16,8 @@ var interval = null;
 var reset = false;
 var timepernote = 0;
 var length = 0;
-var blob, recorder = null;
-var chunks = [];
+let blob, recorder = null;
+let chunks = [];
 var is_recording = false;
 
 // create web audio api elements
@@ -116,18 +116,18 @@ reset = false;
 // recording functions
 function startRecording(){
     const canvasStream = canvas.captureStream(20);
-    const audioDestination = audioCtx.createMediaStreamDestination(); gainNode.connect(audioDestination)
+    const audioDestination = audioCtx.createMediaStreamDestination(); gainNode.connect(audioDestination);
     const combinedStream = new MediaStream();
 
     // video data
-    canvasSteam.getVideoTracks().forEach(track =>
+    canvasStream.getVideoTracks().forEach(track =>
         combinedStream.addTrack(track));
 
     audioDestination.stream.getAudioTracks().forEach(track => 
         combinedStream.addTrack(track));
     recorder = new MediaRecorder(combinedStream, {mimeType: 'video/webm'});
     
-    recorder.ondataavailable = e => {
+recorder.ondataavailable = e => {
 if (e.data.size > 0) {
    chunks.push(e.data);
  }

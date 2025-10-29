@@ -5,33 +5,56 @@
     <link href="style.css" rel="stylesheet"/>
     <teta charset="UTF-8" />
     <title> </title>
+    <link href='https://fonts.googleapis.com/css?family=Bitcount Prop Single' rel='stylesheet'>
 </head>
 <body>
-<div id="container">
-<input type="text" id="input">
 
-<button id="submit" onclick="handle()">submit</button>
+<h1 class="header-gradient"> Oscill𑣲rt₊˚⊹♡</h1>
 
-<button id="record" onclick="toggle()">Start recording</button>
+<div id="info">
+   <h3>  Enter however many notes from CDEFGAB and any sequence in the C Major scale!~ 
+    There are also choices to record, change the type of wave, and color! Have fun :D </h3>
+  </div>
 
-<canvas id="canvas">
-</canvas>
-
-<label> wave color </label>
-<input type = "color" id="color" value="#ff0000">
- 
-<label> volume </label>
-<input type="range" min = "1" max = "100" value="100" id = "vol-slider">
- 
-<label> wave type </label>
-<select id="wave-type">
-  <option value="sine">sine</option>
-  <option value="square">square</option>
-  <option value="sawtooth">sawtooth</option>
-  <option value="triangle">triangle</option>
-
-
+<div id="button">    
+  <button id="submit" onclick="handle()">Submit your notes here!</button>
+<button id="record" onclick="toggle()">Start recording!</button>
 </div>
+
+<div class="sliders">
+  <h2 for="volume-slider">Volume</h2>
+  <div class="slider-container">
+    <input type="range" min="1" max="100" value="100" id="volume-slider" class = "gradient-slider">
+    <span id="volume-value" class="slider-value">100</span>
+</div>
+
+<div class="sliders">
+  <h2 for="speed-slider">Note Length</h2>
+  <div class="slider-container">
+    <input type="range" min="0.5" max="5" value="2" step="0.1"" id="speed-slider" class = "gradient>
+    <span id="note-value" class="note-value">50</span>
+
+<div id="container">
+    <input type="text" id="input">
+
+
+    <canvas id="canvas">
+    </canvas>
+
+    <label> Wave Color </label>
+    <input type = "color" id="color" value="#ff0000">
+ 
+    <label> volume </label>
+    <input type="range" min = "1" max = "100" value="100" id = "vol-slider">
+ 
+    <label> Wave Type </label>
+    <select id="Wave-type">
+      <option value="sine">sine</option>
+      <option value="square">square</option>
+      <option value="sawtooth">sawtooth</option>
+      <option value="triangle">triangle</option>
+</div>
+
 
 
 <script src="main.js"></script>
