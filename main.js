@@ -2,10 +2,9 @@
 const color_picker = document.getElementById('color');
 const vol_slider = document.getElementById('vol-slider');
 
-
-
 // connect the js elements to the html elements
 const input = document.getElementById('input');
+const recording_toggle = document.getElementById('record');
 
 // define canvas variables
 var canvas = document.getElementById("canvas");
@@ -17,6 +16,9 @@ var interval = null;
 var reset = false;
 var timepernote = 0;
 var length = 0;
+var blob, recorder = null;
+var chunks = [];
+var is_recording = false;
 
 // create web audio api elements
 const audioCtx = new AudioContext();
@@ -51,6 +53,7 @@ gainNode.gain.setValueAtTime(100, audioCtx.currentTime);
 oscillator.frequency.setValueAtTime(pitch, audioCtx.currentTime);
 gainNode.gain.setValueAtTime(0, audioCtx.currentTime + (timepernote / 1000) - 0.1);
 }
+
 
 
 // function to handle button click and stop and resume
@@ -110,5 +113,46 @@ interval = setInterval(line, 20);
 reset = false;
 }
 
+// recording functions
+function startRecording(){
+    const canvasStream = canvas.captureStream(20);
+    const audioDestination = audioCtx.createMediaStreamDestination(); gainNode.connect(audioDestination)
+    const combinedStream = new MediaStream();
 
+    // video data
+    canvasSteam.getVideoTracks().forEach(track =>
+        combinedStream.addTrack(track));
 
+    audioDestination.stream.getAudioTracks().forEach(track => 
+        combinedStream.addTrack(track));
+    recorder = new MediaRecorder(combinedStream, {mimeType: 'video/webm'});
+    
+    recorder.ondataavailable = e => {
+if (e.data.size > 0) {
+   chunks.push(e.data);
+ }
+};
+
+recorder.onstop = () => {
+   const blob = new Blob(chunks, { type: 'video/webm' });
+   const url = URL.createObjectURL(blob);
+   const a = document.createElement('a');
+   a.href = url;
+   a.download = 'recording.webm';
+   a.click();
+   URL.revokeObjectURL(url);
+};
+ recorder.start();
+};
+
+function toggle(){
+ is_recording = !is_recording;
+if (is_recording){
+    recording_toggle.innerHTML = "Stop Recording";
+    startRecording();
+} else {
+    recording_toggle.innerHTML = "Start Recording";
+    recorder.stop();
+    }
+
+}
