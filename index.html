@@ -8,7 +8,7 @@
     <link href='https://fonts.googleapis.com/css?family=Bitcount Prop Single' rel='stylesheet'>
 </head>
 <body>
-
+  
 <h1 class="header-gradient"> Oscill𑣲rt₊˚⊹♡</h1>
 
 
@@ -17,44 +17,32 @@
     There are also choices to record, change the type of wave, and color! Have fun :D </h3>
   </div>
 
-  <div class="canvas-container">
-    <canvas id="canvas">
+
+<div id="container">
+<input type="text" id="input">
+
+<button id="submit" onclick="handle()">submit</button>
+
+<button id="record" onclick="toggle()">Start recording</button>
+
+<canvas id="canvas">
 </canvas>
-  </div>
 
-<div class="input-container">
-    <input type="text" id="note-input" placeholder="Enter your notes here! Ex: CDEFGAB" />
-</div>
-
-
-<div id="button">    
-  <button id="submit" onclick="handle()">Submit your notes here!</button>
-<button id="record" onclick="toggle()">Start recording!</button>
-</div>
-
-<div class="sliders">
-  <h2>Volume</h2>
-<label for="vol-slider"> volume </label>
+<label> wave color </label>
+<input type = "color" id="color" value="#FFB6C1">
+ 
+<label> volume </label>
 <input type="range" min = "1" max = "100" value="100" id = "vol-slider">
-    <span id="volume-value" class="slider-value">100</span>
+ 
+<label> wave type </label>
+<select id="wave-type">
+  <option value="sine">sine</option>
+  <option value="square">square</option>
+  <option value="sawtooth">sawtooth</option>
+  <option value="triangle">triangle</option>
+
+
 </div>
-
-<div class="color-picker">
- <label> wave color </label>
-<input type = "color" id="color" value="#ffffff">
-</div>
-
-
-<div id="wave-type-container">
-    <label> Wave Type </label>
-    <select id="wave-type">
-      <option value="sine">sine</option>
-      <option value="square">square</option>
-      <option value="sawtooth">sawtooth</option>
-      <option value="triangle">triangle</option>
-    </select>
-</div>
-
 
 
 <script src="main.js"></script>
