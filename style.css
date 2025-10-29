@@ -1,32 +1,9 @@
-.site-header {
-    padding: 20px; 
-    background-image: 
-    url('hearts.webp');
-    background-repeat: repeat;
-}
 
 h1 {
+     padding: 20px;
     font-size: 4em;
     font-weight: bold;
     margin: .3em 0;
-}
-
-@keyframes GradientShift {
-    0% {
-       background-size: 200% 200%;
-        background-position: 0% 0%;
-        filter: hue-rotate(0deg);
-    }
-    50% {
-        background-size: 300% 300%;
-        background-position: 100% 100%;
-        filter: hue-rotate(45deg);
-    }
-    100% {
-        background-size: 200% 200%;
-         filter: hue-rotate(0deg);
-        background-position: 0% 0%;
-    }
 }
 
 #container {
@@ -40,12 +17,7 @@ h1 {
     gap: 10px;
 }
 
-#button {
-    margin-top: 1em;
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-}
+
 
 #canvas {
     border: 6px solid rgb(255, 153, 212);

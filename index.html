@@ -11,10 +11,20 @@
 
 <h1 class="header-gradient"> Oscill𑣲rt₊˚⊹♡</h1>
 
+
 <div id="info">
    <h3>  Enter however many notes from CDEFGAB and any sequence in the C Major scale!~ 
     There are also choices to record, change the type of wave, and color! Have fun :D </h3>
   </div>
+
+  <div class="canvas-container">
+    <canvas id="canvas" width="800" height="400"></canvas>
+  </div>
+
+<div class="input-container">
+    <input type="text" id="note-input" placeholder="Enter your notes here! Ex: CDEFGAB" />
+</div>
+
 
 <div id="button">    
   <button id="submit" onclick="handle()">Submit your notes here!</button>
@@ -32,15 +42,11 @@
   <h2 for="speed-slider">Note Length</h2>
   <div class="slider-container">
     <input type="range" min="0.5" max="5" value="2" step="0.1"" id="speed-slider" class = "gradient>
-    <span id="note-value" class="note-value">50</span>
+    <span id="note-length-value" class="note-value">2 seconds</span>
+</div>
 
 <div id="container">
-    <input type="text" id="input">
-
-
-    <canvas id="canvas">
-    </canvas>
-
+ 
     <label> Wave Color </label>
     <input type = "color" id="color" value="#ff0000">
  
