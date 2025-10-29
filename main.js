@@ -48,10 +48,10 @@ notenames.set("B", 493.9);
 
 // function to set frequency and channel sound
 function frequency(pitch){
-freq = pitch / 10000;
-gainNode.gain.setValueAtTime(100, audioCtx.currentTime);
-oscillator.frequency.setValueAtTime(pitch, audioCtx.currentTime);
-gainNode.gain.setValueAtTime(0, audioCtx.currentTime + (timepernote / 1000) - 0.1);
+    let freq = pitch / 10000;
+    gainNode.gain.setValueAtTime(100, audioCtx.currentTime);
+    oscillator.frequency.setValueAtTime(pitch, audioCtx.currentTime);
+    gainNode.gain.setValueAtTime(0, audioCtx.currentTime + (timepernote / 1000) - 0.1);
 }
 
 
@@ -65,9 +65,9 @@ var noteslist = [];
  audioCtx.resume();
  gainNode.gain.value = 0;
  length = usernotes.length; 
- timepernote = (6000 / length);
+ timepernote = length > 0 ? (6000 / length) : 0;
 
- for ( i = 0; i < usernotes.length;i++) {
+ for (let i = 0; i < usernotes.length; i++) {
     noteslist.push(notenames.get(usernotes.charAt(i)));
  }
   let j = 0;
@@ -75,7 +75,7 @@ var noteslist = [];
   repeat = setInterval(() =>{
         if (j <noteslist.length) {
             frequency(parseInt(noteslist[j]));
-            drawWave();
+            drawWave(noteslist[j] || 1);
             j++;
         } else {
             clearInterval(repeat)
@@ -88,35 +88,44 @@ var noteslist = [];
 var counter = 0;
 
 function line() {
-     y = height/2 +  ((vol_slider.value/100)*40)  * Math.sin(x * 2  * Math.PI * freq * (0.5 * length));
-    ctx.lineTo(x, y);
-     ctx.strokeStyle = color_picker.value;
+    // Declare x, y, freq locally or ensure they are set before use
+    if (typeof line.x === 'undefined') line.x = 0;
+    if (typeof line.y === 'undefined') line.y = height / 2;
+    if (typeof line.freq === 'undefined') line.freq = 1; // Default frequency
+
+    line.y = height/2 + ((vol_slider.value/100)*40) * Math.sin(line.x * 2 * Math.PI * line.freq * (0.5 * length));
+    ctx.lineTo(line.x, line.y);
+    ctx.strokeStyle = color_picker.value;
     ctx.stroke();
-    x = x + 1;
+    line.x = line.x + 1;
     counter++;
-    if ( counter > (timepernote / 20)) {
+    if (counter > (timepernote / 20)) {
         clearInterval(interval);
     }
 }
 
-function drawWave() {
+function drawWave(freq = 1) {
     clearInterval(interval);
-if (reset) {
-    ctx.clearRect(0,0,width, height);
-    x = 0;
-    y= height/2;
-    ctx.moveTo(x, y);
-    ctx.beginPath();
-}
-counter = 0;
-interval = setInterval(line, 20);
-reset = false;
+    if (reset) {
+        ctx.clearRect(0, 0, width, height);
+        line.x = 0;
+        line.y = height / 2;
+        line.freq = freq;
+        ctx.moveTo(line.x, line.y);
+        ctx.beginPath();
+    }
+    counter = 0;
+    interval = setInterval(line, 20);
+    reset = false;
 }
 
 // recording functions
+// Create audioDestination and connect gainNode only once
+const audioDestination = audioCtx.createMediaStreamDestination();
+gainNode.connect(audioDestination);
+
 function startRecording(){
     const canvasStream = canvas.captureStream(20);
-    const audioDestination = audioCtx.createMediaStreamDestination(); gainNode.connect(audioDestination);
     const combinedStream = new MediaStream();
 
     // video data
