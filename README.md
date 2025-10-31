@@ -14,3 +14,5 @@ Plus, I used VSCode and Github to look and code! I added a lot of pink because i
 ## Struggles
 I have never really used JavaScript, so it was a huge learning curve for me (and still is because I don't totally understand all of it but its okay!) I also had to look up a lot of CSS documentation because it has been a long time since I used it. 
 Plus, sometimes I found that some lines of code offered in the tutorial didn't specify where to put the lines.. so I had to guess and stare at my code which isn't really documented into my hours but I took a lot time just looking. 
+
+[![Athena Award Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Faward.athena.hackclub.com%2Fapi%2Fbadge)](https://award.athena.hackclub.com?utm_source=readme)
